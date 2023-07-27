@@ -15,6 +15,18 @@
 
 const apiKey = 'b773c1e6dd0b40ad903d56b322aba57a';
 
+// getting user IP
+window.addEventListener('load', () => {
+    fetch('https://api.ipify.org?format=json')
+        .then(response => response.json())
+        .then(data => {
+            const ip = data.ip;
+            document.getElementById('ip-address').textContent = ip || 'Unknown IP'; // update ip
+            getIPDetails(ip);
+        })
+        .catch(error => console.error('Error:', error));
+});
+
 function getIPDetails(ip) {
     fetch(`https://ipgeolocation.abstractapi.com/v1/?api_key=${apiKey}&ip=${ip}`)
         .then(response => response.json())
@@ -28,20 +40,7 @@ function getIPDetails(ip) {
                 zoom: 12
             };
             const map = new google.maps.Map(document.getElementById('map'), mapOptions);
-
-            // const marker = new google.maps.Marker({ 
-            //     position: { lat: latitude, lng: longitude },
-            //     map: map,
-            //     icon: {
-            //         path: google.maps.SymbolPath.FORWARD_CLOSED_ARROW,
-            //         scale: 7,
-            //         strokeWeight: 2,
-            //         strokeColor: 'black',
-            //         fillColor: 'yellow',
-            //         fillOpacity: 1,
-            //     }
-            // });
-            const marker = new google.maps.Marker({ //marker custom
+            const marker = new google.maps.Marker({         //marker custom
                 position: { lat: latitude, lng: longitude },
                 map: map,
                 icon: {
@@ -49,22 +48,24 @@ function getIPDetails(ip) {
                     scaledSize: new google.maps.Size(60, 60),
                 }
             });
+            updateInformation(data);
         })
 
-        .catch(error => console.error('Ошибка:', error));
+        .catch(error => console.error('Error:', error));
+
 }
 
-// getting user IP
-window.addEventListener('load', () => {
-    fetch('https://api.ipify.org?format=json')
-        .then(response => response.json())
-        .then(data => {
-            const ip = data.ip;
-            getIPDetails(ip);
+function formatTimezone(offset) {
+    const formattedOffset = new Date().toLocaleTimeString('en', { timeZoneOffset: offset, timeZoneName: 'short' }).split(' ')[2];
+    return formattedOffset;
+}
 
-        })
-        .catch(error => console.error('Ошибка:', error));
-});
+function updateInformation(data) {
+    document.getElementById('location').textContent = `${data.city || 'Unknown City'}, ${data.country || 'Unknown Country'}`;
+    document.getElementById('timezone').textContent = formatTimezone(data.timezone?.offset);
+    document.getElementById('isp').textContent = data.connection?.organization_name || 'Unknown ISP';
+}
+
 
 // initialize google map
 function initMap() {

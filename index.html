@@ -12,19 +12,39 @@
 <body>
     <div class="wrapper">
         <div class="container">
-        
+
 
             <h1>IP Address Tracker</h1>
             <input type="text" id="ipInput" placeholder="Search for any IP address or domain">
-            <button onclick="getIPDetails()"><img src="img/arrow-btn.svg" alt=""></button>
+            <button ><img src="img/arrow-btn.svg" alt="get IP"></button>
             <div id="map" style="height: 80dvh;"></div>
+            <div class="information">
+                <div class="information-item">
+                    <h2>IP Address</h2>
+                    <p class="subscription" id="ip-address"></p>
+                </div>
+                <div class="information-item">
+                    <h2>Location</h2>
+                    <p class="subscription" id="location"></p>
+                </div>
+                <div class="information-item">
+                    <h2>Timezone</h2>
+                    <p class="subscription" id="timezone"></p>
+                </div>
+                <div class="information-item">
+                    <h2>ISP</h2>
+                    <p class="subscription" id="isp"></p>
+                </div>
+            </div>
+
         </div>
 
 
     </div>
 
     <script src="main.js"></script>
-    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCEq9wz-43lEN60YTLfkOms9pO5FW-53SY&callback=initMap" async defer></script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCEq9wz-43lEN60YTLfkOms9pO5FW-53SY&callback=initMap"
+        async defer></script>
 
 </body>
 

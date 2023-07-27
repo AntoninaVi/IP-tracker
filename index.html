@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IP Tracker</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+
+<body>
+    <div class="wrapper">
+        <div class="container">
+        
+
+            <h1>IP Address Tracker</h1>
+            <input type="text" id="ipInput" placeholder="Search for any IP address or domain">
+            <button onclick="getIPDetails()"><img src="img/arrow-btn.svg" alt=""></button>
+            <div id="map" style="height: 80dvh;"></div>
+        </div>
+
+
+    </div>
+
+    <script src="main.js"></script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCEq9wz-43lEN60YTLfkOms9pO5FW-53SY&callback=initMap" async defer></script>
+
+</body>
+
+</html>
+
+<!-- AIzaSyCEq9wz-43lEN60YTLfkOms9pO5FW-53SY -->

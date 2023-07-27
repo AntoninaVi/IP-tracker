@@ -6,18 +6,28 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>IP Tracker</title>
     <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="normalize.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
+
 </head>
 
 <body>
-    <div class="wrapper">
-        <div class="container">
 
+    <div class="container">
 
-            <h1>IP Address Tracker</h1>
-            <input type="text" id="ipInput" placeholder="Search for any IP address or domain">
-            <button ><img src="img/arrow-btn.svg" alt="get IP"></button>
+        <header class="header">
+            <h1 class="header-title">IP Address Tracker</h1>
+
+            <div class="search">
+                <input type="text" id="ipInput" placeholder="Search for any IP address or domain">
+                <button id="searchBtn"><img src="img/arrow-btn.svg" alt="get IP"></button>
+            </div>
+        </header>
+
+        <main class="main">
             <div id="map" style="height: 80dvh;"></div>
+
             <div class="information">
                 <div class="information-item">
                     <h2>IP Address</h2>
@@ -36,18 +46,21 @@
                     <p class="subscription" id="isp"></p>
                 </div>
             </div>
-
-        </div>
-
+        </main>
 
     </div>
 
+
+
+
+
     <script src="main.js"></script>
-    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCEq9wz-43lEN60YTLfkOms9pO5FW-53SY&callback=initMap"
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAbQtUXAmrOsUJBY0UIsf0PI4CVcMyf-lo&callback=initMap"
         async defer></script>
 
 </body>
 
+
 </html>
 
-<!-- AIzaSyCEq9wz-43lEN60YTLfkOms9pO5FW-53SY -->
+<!--AIzaSyAbQtUXAmrOsUJBY0UIsf0PI4CVcMyf-lo-->

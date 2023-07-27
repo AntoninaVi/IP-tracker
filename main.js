@@ -1,19 +1,6 @@
 
-// function httpGetAsync(url, callback) {
-//     const xmlHttp = new XMLHttpRequest();
-//     xmlHttp.onreadystatechange = function () {
-//         if (xmlHttp.readyState === 4 && xmlHttp.status === 200)
-//             callback(xmlHttp.responseText);
-//     }
-//     xmlHttp.open("GET", url, true); // true for asynchronous
-//     xmlHttp.send(null);
-// }
-
-// const url = "https://ipgeolocation.abstractapi.com/v1/?api_key=b773c1e6dd0b40ad903d56b322aba57a"
-
-// httpGetAsync(url)
-
 const apiKey = 'b773c1e6dd0b40ad903d56b322aba57a';
+
 
 // getting user IP
 window.addEventListener('load', () => {
@@ -21,23 +8,25 @@ window.addEventListener('load', () => {
         .then(response => response.json())
         .then(data => {
             const ip = data.ip;
-            document.getElementById('ip-address').textContent = ip || 'Unknown IP'; // update ip
+            document.getElementById('ip-address').textContent = ip || 'Unknown IP';
             getIPDetails(ip);
         })
         .catch(error => console.error('Error:', error));
 });
 
+
 function getIPDetails(ip) {
     fetch(`https://ipgeolocation.abstractapi.com/v1/?api_key=${apiKey}&ip=${ip}`)
         .then(response => response.json())
         .then(data => {
+            console.log(data);
             const latitude = data.latitude;
             const longitude = data.longitude;
 
             // Google Maps
             const mapOptions = {
                 center: { lat: latitude, lng: longitude },
-                zoom: 12
+                zoom: 15
             };
             const map = new google.maps.Map(document.getElementById('map'), mapOptions);
             const marker = new google.maps.Marker({         //marker custom
@@ -54,24 +43,46 @@ function getIPDetails(ip) {
         .catch(error => console.error('Error:', error));
 
 }
+function formatTimezone(timezone) {
+    if (!timezone || !timezone.name) {
+        return 'Unknown Timezone';
+    }
 
-function formatTimezone(offset) {
-    const formattedOffset = new Date().toLocaleTimeString('en', { timeZoneOffset: offset, timeZoneName: 'short' }).split(' ')[2];
-    return formattedOffset;
+    const gmtOffset = timezone.gmt_offset;
+    const sign = gmtOffset >= 0 ? '+' : '-';
+    const hours = Math.floor(Math.abs(gmtOffset));
+    const minutes = (Math.abs(gmtOffset) % 1) * 60;
+
+    return `UTC ${sign}${String(hours).padStart(2, '0')}:${String(minutes).padStart(2, '0')}`;
 }
+
 
 function updateInformation(data) {
     document.getElementById('location').textContent = `${data.city || 'Unknown City'}, ${data.country || 'Unknown Country'}`;
-    document.getElementById('timezone').textContent = formatTimezone(data.timezone?.offset);
+    document.getElementById('timezone').textContent = formatTimezone(data.timezone);
     document.getElementById('isp').textContent = data.connection?.organization_name || 'Unknown ISP';
 }
 
 
-// initialize google map
+// Initialize google map
 function initMap() {
+
+    const defaultLatitude = 37.7749;
+    const defaultLongitude = -122.4194;
+
     const mapOptions = {
-        center: { lat: 37.7749, lng: -122.4194 },
-        zoom: 12
+        center: { lat: defaultLatitude, lng: defaultLongitude },
+        zoom: 15,
     };
+
     const map = new google.maps.Map(document.getElementById('map'), mapOptions);
 }
+// var map;
+// function initMap() {
+//     map = new google.maps.Map(document.getElementById('map'), {
+//         center: { lat: -34.397, lng: 150.644 },
+//     });
+// }
+
+// 92.54.195.50  212.102.40.177
+// Add event listener to the search button

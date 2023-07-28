@@ -1,5 +1,6 @@
 
-const apiKey = 'b773c1e6dd0b40ad903d56b322aba57a';
+const apiKey = '967fc01f637f62b44ecfe691b44e394e06fd0e1377d21f3c4345046b';
+let map;
 
 
 // getting user IP
@@ -10,13 +11,14 @@ window.addEventListener('load', () => {
             const ip = data.ip;
             document.getElementById('ip-address').textContent = ip || 'Unknown IP';
             getIPDetails(ip);
+
         })
         .catch(error => console.error('Error:', error));
 });
 
 
 function getIPDetails(ip) {
-    fetch(`https://ipgeolocation.abstractapi.com/v1/?api_key=${apiKey}&ip=${ip}`)
+    fetch(`https://api.ipdata.co/${ip}?api-key=${apiKey}`)
         .then(response => response.json())
         .then(data => {
             console.log(data);
@@ -28,7 +30,7 @@ function getIPDetails(ip) {
                 center: { lat: latitude, lng: longitude },
                 zoom: 15
             };
-            const map = new google.maps.Map(document.getElementById('map'), mapOptions);
+            map = new google.maps.Map(document.getElementById('map'), mapOptions);
             const marker = new google.maps.Marker({         //marker custom
                 position: { lat: latitude, lng: longitude },
                 map: map,
@@ -43,6 +45,8 @@ function getIPDetails(ip) {
         .catch(error => console.error('Error:', error));
 
 }
+
+
 function formatTimezone(timezone) {
     if (!timezone || !timezone.name) {
         return 'Unknown Timezone';
@@ -56,12 +60,12 @@ function formatTimezone(timezone) {
     return `UTC ${sign}${String(hours).padStart(2, '0')}:${String(minutes).padStart(2, '0')}`;
 }
 
-
 function updateInformation(data) {
-    document.getElementById('location').textContent = `${data.city || 'Unknown City'}, ${data.country || 'Unknown Country'}`;
-    document.getElementById('timezone').textContent = formatTimezone(data.timezone);
-    document.getElementById('isp').textContent = data.connection?.organization_name || 'Unknown ISP';
+    document.getElementById('location').textContent = `${data.city || 'Unknown City'}, ${data.country_name || 'Unknown Country'}`;
+    document.getElementById('timezone').textContent = data.time_zone ? data.time_zone.name : 'Unknown Timezone';
+    document.getElementById('isp').textContent = data.asn ? data.asn.name : 'Unknown ISP';
 }
+
 
 
 // Initialize google map
@@ -75,14 +79,14 @@ function initMap() {
         zoom: 15,
     };
 
-    const map = new google.maps.Map(document.getElementById('map'), mapOptions);
-}
-// var map;
-// function initMap() {
-//     map = new google.maps.Map(document.getElementById('map'), {
-//         center: { lat: -34.397, lng: 150.644 },
-//     });
-// }
 
-// 92.54.195.50  212.102.40.177
-// Add event listener to the search button
+}
+
+
+const ipForm = document.querySelector('form');
+ipForm.addEventListener('submit', function (event) {
+    event.preventDefault();
+    const formData = new FormData(event.currentTarget);
+    const ip = formData.get('ip-input');
+    getIPDetails(ip);
+});

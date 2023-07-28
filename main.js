@@ -1,6 +1,5 @@
 
 const apiKey = '967fc01f637f62b44ecfe691b44e394e06fd0e1377d21f3c4345046b';
-let map;
 
 
 // getting user IP
@@ -11,7 +10,6 @@ window.addEventListener('load', () => {
             const ip = data.ip;
             document.getElementById('ip-address').textContent = ip || 'Unknown IP';
             getIPDetails(ip);
-
         })
         .catch(error => console.error('Error:', error));
 });
@@ -46,34 +44,18 @@ function getIPDetails(ip) {
 
 }
 
-
-function formatTimezone(timezone) {
-    if (!timezone || !timezone.name) {
-        return 'Unknown Timezone';
-    }
-
-    const gmtOffset = timezone.gmt_offset;
-    const sign = gmtOffset >= 0 ? '+' : '-';
-    const hours = Math.floor(Math.abs(gmtOffset));
-    const minutes = (Math.abs(gmtOffset) % 1) * 60;
-
-    return `UTC ${sign}${String(hours).padStart(2, '0')}:${String(minutes).padStart(2, '0')}`;
-}
-
+//information section
 function updateInformation(data) {
     document.getElementById('location').textContent = `${data.city || 'Unknown City'}, ${data.country_name || 'Unknown Country'}`;
-    document.getElementById('timezone').textContent = data.time_zone ? data.time_zone.name : 'Unknown Timezone';
+    document.getElementById('timezone').textContent = data.time_zone ? `UTC ${data.time_zone.offset.slice(0, 3)}:${data.time_zone.offset.slice(3)}` : 'Unknown Timezone';
     document.getElementById('isp').textContent = data.asn ? data.asn.name : 'Unknown ISP';
 }
 
 
-
 // Initialize google map
 function initMap() {
-
     const defaultLatitude = 37.7749;
     const defaultLongitude = -122.4194;
-
     const mapOptions = {
         center: { lat: defaultLatitude, lng: defaultLongitude },
         zoom: 15,
@@ -81,8 +63,6 @@ function initMap() {
 
 
 }
-
-
 const ipForm = document.querySelector('form');
 ipForm.addEventListener('submit', function (event) {
     event.preventDefault();

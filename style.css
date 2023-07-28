@@ -1,3 +1,18 @@
+* {
+  margin: 0;
+  padding: 0;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+}
+
+body {
+  font-family: "Rubik", sans-serif;
+}
+
+.wrapper {
+  height: 60vh;
+}
+
 .container {
   max-width: 1480px;
   width: 100%;
@@ -7,6 +22,9 @@
 
 .header {
   background-image: url(img/bg.png);
+  background-size: cover;
+  height: 40vh;
+  padding-top: 2em;
 }
 .header-title {
   color: #fff;
@@ -15,10 +33,12 @@
   font-weight: 500;
   letter-spacing: -0.286px;
   text-align: center;
+  margin-bottom: 31px;
 }
 
-.search {
+.search-section {
   text-align: center;
+  margin-bottom: 3em;
 }
 
 .main {
@@ -27,8 +47,8 @@
 
 .information {
   position: absolute;
-  top: 0;
-  left: 10%;
+  top: -4em;
+  left: 14em;
   display: -ms-grid;
   display: grid;
   -ms-grid-columns: 20% 2em 20% 2em 20% 2em 20%;
@@ -54,4 +74,36 @@
 
 #map {
   height: 100%;
+}
+
+.form {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+input {
+  max-width: 35em;
+  width: 100%;
+  padding: 1.2em;
+  border-top-left-radius: 15px;
+  border-bottom-left-radius: 15px;
+  background: #fff;
+  -webkit-box-shadow: 0px 50px 50px -25px rgba(0, 0, 0, 0.1);
+          box-shadow: 0px 50px 50px -25px rgba(0, 0, 0, 0.1);
+  border: none;
+}
+
+#ip-input-btn {
+  padding: 1.1em;
+  border-top-right-radius: 15px;
+  border-bottom-right-radius: 15px;
+  background-color: black;
+  border: none;
 }

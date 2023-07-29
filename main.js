@@ -26,7 +26,8 @@ function getIPDetails(ip) {
             // Google Maps
             const mapOptions = {
                 center: { lat: latitude, lng: longitude },
-                zoom: 15
+                zoom: 15,
+                mapTypeControl: false,
             };
             map = new google.maps.Map(document.getElementById('map'), mapOptions);
             const marker = new google.maps.Marker({         //marker custom

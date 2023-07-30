@@ -40,7 +40,6 @@ function getIPDetails(ip) {
             });
             updateInformation(data);
         })
-
         .catch(error => console.error('Error:', error));
 
 }
@@ -51,7 +50,6 @@ function updateInformation(data) {
     document.getElementById('timezone').textContent = data.time_zone ? `UTC ${data.time_zone.offset.slice(0, 3)}:${data.time_zone.offset.slice(3)}` : 'Unknown Timezone';
     document.getElementById('isp').textContent = data.asn ? data.asn.name : 'Unknown ISP';
 }
-
 
 // Initialize google map
 function initMap() {
@@ -64,10 +62,29 @@ function initMap() {
 
 
 }
+//ip input
 const ipForm = document.querySelector('form');
 ipForm.addEventListener('submit', function (event) {
     event.preventDefault();
     const formData = new FormData(event.currentTarget);
     const ip = formData.get('ip-input');
+    
+    //validation IP 
+    const ipFormatRegex = /^(\d{1,3}\.){3}\d{1,3}$/;
+    if (!ipFormatRegex.test(ip)) {
+        customAlert();
+        return;
+    }
     getIPDetails(ip);
 });
+
+//alert message
+function customAlert() {
+    const alertMessage= document.getElementById('alert');
+    alertMessage.style.display = 'flex';
+
+    const closeButton = document.getElementById('close-alert');
+    closeButton.addEventListener('click', () => {
+        alertMessage.style.display = 'none';
+    });
+}

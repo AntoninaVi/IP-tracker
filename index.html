@@ -19,10 +19,15 @@
 
 
     <div class="wrapper">
+        <div id="alert" class="alert">
+            <div class="alert-content">
+                <p class="alert-message">Wrong IP address. Please enter a valid IP address.</p>
+                <button class="close-alert" id="close-alert">OK</button>
+            </div>
+        </div>
         <header class="header">
             <div class="container">
                 <h1 class="header-title">IP Address Tracker</h1>
-
                 <div class="search-section">
                     <form class="form">
                         <input type="text" title="ip-input" name="ip-input" id="ip-input" aria-label="ip-input"
@@ -52,7 +57,6 @@
                 </div>
             </div>
         </header>
-
         <main class="main">
             <div id="map"></div>
 

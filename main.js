@@ -1,6 +1,4 @@
-
 const apiKey = '967fc01f637f62b44ecfe691b44e394e06fd0e1377d21f3c4345046b';
-
 
 // getting user IP
 window.addEventListener('load', () => {

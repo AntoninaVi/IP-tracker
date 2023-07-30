@@ -26,7 +26,7 @@ function getIPDetails(ip) {
             // Google Maps
             const mapOptions = {
                 center: { lat: latitude, lng: longitude },
-                zoom: 15,
+                zoom: 13,
                 mapTypeControl: false,
             };
             map = new google.maps.Map(document.getElementById('map'), mapOptions);
@@ -55,12 +55,6 @@ function updateInformation(data) {
 function initMap() {
     const defaultLatitude = 37.7749;
     const defaultLongitude = -122.4194;
-    const mapOptions = {
-        center: { lat: defaultLatitude, lng: defaultLongitude },
-        zoom: 15,
-    };
-
-
 }
 //ip input
 const ipForm = document.querySelector('form');

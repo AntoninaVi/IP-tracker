@@ -34,7 +34,7 @@ function getIPDetails(ip) {
                 position: { lat: latitude, lng: longitude },
                 map: map,
                 icon: {
-                    url: '/img/marker.svg',
+                    url: 'img/marker.svg',
                     scaledSize: new google.maps.Size(60, 60),
                 }
             });

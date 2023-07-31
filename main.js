@@ -6,7 +6,6 @@ window.addEventListener('load', () => {
         .then(response => response.json())
         .then(data => {
             const ip = data.ip;
-            document.getElementById('ip-address').textContent = ip || 'Unknown IP';
             getIPDetails(ip);
         })
         .catch(error => console.error('Error:', error));
@@ -20,12 +19,16 @@ function getIPDetails(ip) {
 
             const [latitude, longitude] = data.loc ? data.loc.split(',') : [null, null];
             const location = `${data.city || 'Unknown City'}, ${data.country || 'Unknown Country'}`;
-            const timezone = data.timezone || 'Unknown Timezone';
             const isp = data.org || 'Unknown ISP';
 
+            const date = new Date();
+            const timeZoneOffset = date.getTimezoneOffset() / -60;
+            const timezone = data.timezone ? `UTC ${timeZoneOffset >= 0 ? '+' : '-'}${Math.abs(timeZoneOffset).toString().padStart(2, '0')}:00` : 'Unknown Timezone';
+
+            document.getElementById('timezone').textContent = timezone;
             document.getElementById('location').textContent = location;
-            document.getElementById('timezone').textContent = `UTC ${timezone}`;
             document.getElementById('isp').textContent = isp;
+            document.getElementById('ip-address').textContent = ip || 'Unknown IP';
 
             if (latitude && longitude) {
                 const mapOptions = {

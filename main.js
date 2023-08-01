@@ -21,11 +21,11 @@ function getIPDetails(ip) {
             const location = `${data.city || 'Unknown City'}, ${data.country || 'Unknown Country'}`;
             const isp = data.org || 'Unknown ISP';
 
-            const date = new Date();
-            const timeZoneOffset = date.getTimezoneOffset() / -60;
-            const timezone = data.timezone ? `UTC ${timeZoneOffset >= 0 ? '+' : '-'}${Math.abs(timeZoneOffset).toString().padStart(2, '0')}:00` : 'Unknown Timezone';
+            // Get the timezone offset in the format "+04:00"
+            const timezoneOffset = data.timezone ? getTimezoneOffset(data.timezone) : 'Unknown Timezone';
+            const formatTimezone = `${timezoneOffset}`;
 
-            document.getElementById('timezone').textContent = timezone;
+            document.getElementById('timezone').textContent = formatTimezone;
             document.getElementById('location').textContent = location;
             document.getElementById('isp').textContent = isp;
             document.getElementById('ip-address').textContent = ip || 'Unknown IP';
@@ -52,7 +52,18 @@ function getIPDetails(ip) {
         })
         .catch(error => console.error('Error:', error));
 }
-
+//timezone format
+function getTimezoneOffset(timezone) {
+    const now = new Date();
+    const formatter = new Intl.DateTimeFormat('en-US', {
+        timeZone: timezone,
+        timeZoneName: 'longOffset',
+        hour12: false,
+        hour: '2-digit',
+        minute: '2-digit',
+    });
+    return formatter.formatToParts(now).find(part => part.type === 'timeZoneName').value;
+}
 // Initialize google map
 function initMap() {
     const defaultLatitude = 37.7749;
@@ -64,7 +75,6 @@ function initMap() {
     };
     map = new google.maps.Map(document.getElementById('map'), mapOptions);
 }
-
 //ip input
 const ipForm = document.querySelector('form');
 ipForm.addEventListener('submit', function (event) {
@@ -80,7 +90,6 @@ ipForm.addEventListener('submit', function (event) {
     }
     getIPDetails(ip);
 });
-
 //alert message
 function showAlertMessage() {
     const alertMessage = document.getElementById('alert');

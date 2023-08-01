@@ -23,7 +23,7 @@ function getIPDetails(ip) {
 
             // Get the timezone offset in the format "+04:00"
             const timezoneOffset = data.timezone ? getTimezoneOffset(data.timezone) : 'Unknown Timezone';
-            const formatTimezone = `${timezoneOffset}`;
+            const formatTimezone = ` ${timezoneOffset}`;
 
             document.getElementById('timezone').textContent = formatTimezone;
             document.getElementById('location').textContent = location;
@@ -54,16 +54,16 @@ function getIPDetails(ip) {
 }
 //timezone format
 function getTimezoneOffset(timezone) {
-    const now = new Date();
-    const formatter = new Intl.DateTimeFormat('en-US', {
+    const offset = new Intl.DateTimeFormat('en-US', {
         timeZone: timezone,
         timeZoneName: 'longOffset',
         hour12: false,
         hour: '2-digit',
         minute: '2-digit',
-    });
-    return formatter.formatToParts(now).find(part => part.type === 'timeZoneName').value;
+    }).formatToParts(new Date()).find(part => part.type === 'timeZoneName').value;
+    return offset.replace('GMT', 'GMT ');
 }
+
 // Initialize google map
 function initMap() {
     const defaultLatitude = 37.7749;

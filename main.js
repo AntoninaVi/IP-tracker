@@ -61,7 +61,7 @@ function getTimezoneOffset(timezone) {
         hour: '2-digit',
         minute: '2-digit',
     }).formatToParts(new Date()).find(part => part.type === 'timeZoneName').value;
-    return offset.replace('GMT', 'UTC time');
+    return offset.replace('GMT', 'UTC ');
 }
 
 // Initialize google map
